@@ -1,12 +1,18 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
 
 {% block body %}
+
     <h3>Applicants</h3>
     {% for applicant in applicants %}
-        {% if  applicant.complete == False %}
-        <p>{{ applicant.id }} | {{ applicant.email }} | {{ applicant.job }} | {{ applicant.score }}</p>
+        {% if  applicant.status == "Processing" or "Shortlisted" %}
+        <p>
+            ID: {{ applicant.id }} | 
+            Position: {{ applicant.job }} | 
+            Test score: {{ applicant.score }} | 
+            Status: {{ applicant.status }}
+            <a href="/id{{ applicant.id }}">View</a>
+            <a href="/">Delete</a>
+        </p>
         {% endif %}
     {% endfor %}
-    <a href="/">View</a>
-    <a href="/">Delete</a>
 {% endblock %}

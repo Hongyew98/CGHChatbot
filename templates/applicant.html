@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h3>Applicant {{ applicant.id }}</h3>
+        <p>Name: {{ applicant.name }}</p>
+        <p>Email: {{ applicant.email }}</p>
+        <p>Position: {{ applicant.job }}</p>
+        <p>Test Score: {{ applicant.score }}</p>
+        <p>Status: {{ applicant.status }}</p>
+        <p>Comments: {{ applicant.comments }}</p>
+        Edit comments:
+        <form>
+            <input type="text" name="comment" placeholder="None" autocomplete="off" value="{{ applicant.comments }}">
+            <input type="submit" value="Save">
+        </form>
+        <p><button>Shortlist</button></p>
+        <p>
+            <button>Accept</button>
+            <button>Reject</button>
+        </p>
+{% endblock %}
