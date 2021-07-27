@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <form action="/" method="post">
+        <input type="hidden" name="email" value="admin">
+        <input type="submit" value="back">
+    </form>
+    Questions:
+    <br>
+    {% for question in questions %}
+        {{ question.question }} | {{ question.status }}
+        <form method="post">
+            <input type="hidden" name="id" value="{{ question.id }}">
+            <textarea name="answer">{{ question.answer }}</textarea>
+            <input type="submit" value="Save">
+        </form>
+        <br>
+    {% endfor %}
+{% endblock %}

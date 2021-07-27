@@ -22,8 +22,23 @@
             <option value="Respiratory Therapist">Respiratory Therapist</option>
         </select>
         <br>
+            <p>
+                <label for="cv">File Upload</label>
+                <input type="file" name="cv" accept=".doc, .docx, .pdf">
+            </p>
+        <br>
         <input type="number" min="0" max="10" name="score" placeholder="Score (out of 10)" autocomplete="off">
         <br>
         <input type="submit" value="Apply">
+    </form>
+    <h1>Ask a Question</h1>
+    <form method="post">
+        <input type="text" name="name2" placeholder="Name" autocomplete="off" required>
+        <br>
+        <input type="text" name="email2" placeholder="Email" autocomplete="off" required>
+        <br>
+        <textarea name="question"></textarea>
+        <br>
+        <input type="submit" value="Ask">
     </form>
 {% endblock %}
