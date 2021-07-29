@@ -14,10 +14,15 @@ def index():
     if request.method == "GET":
         return redirect("/login")
     else:
-        if str(request.form.get("email")) != 'admin':
-            return 'Invalid login'
+        if str(request.form.get("email")) != 'admin@cgh.com' or str(request.form.get("password")) != 'test':
+            flash('Invalid login.')
+            return redirect("/login")
         else:
-            return render_template("index.html")
+            return redirect("/main")
+
+@app.route("/main")
+def main():
+    return render_template("index.html")
 
 @app.route("/login")
 def login():

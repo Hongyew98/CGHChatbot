@@ -1,9 +1,27 @@
 {% extends "base.html" %}
 
 {% block body %}
-    CGH Recruitment
-    <form action="/" method="post">
-        <input name="email" placeholder="Email" type="text" autocomplete="off" autofocus>
-        <input type="submit" value="Log In">
-    </form>
+    <div class="box">
+        <h2 style="text-align:center;font-family:sans-serif;font-size:32px;margin:30px">CGH Recruitment</h2>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="notification">
+          {{ messages[0] }}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <form method="POST" action="/">
+            <div class="field">
+                <div class="control">
+                    <input type="email" name="email" placeholder="Email" autofocus autocomplete="off">
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <input type="password" name="password" placeholder="Your Password">
+                </div>
+            </div>
+            <button class="button-form">Login</button>
+        </form>
+      </div>
 {% endblock %}
