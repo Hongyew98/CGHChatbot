@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.sql.elements import Null
 from models import Applicants, Questions
 
 app = Flask(__name__)
