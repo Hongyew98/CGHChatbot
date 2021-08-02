@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('alljobs') }}">Back</a>
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <h2 class="article-title">{{ job.title }}</h2>
+            <small class="text-muted">listed on {{ job.created.strftime("%d-%m-%Y") }}</small>
+            <small class="article-content">{{ job.type }}</p>
+        </div>
+        <p class="article-content">{{ job.description }}</p>
+        <small class="article-content">${{ job.minpay }} - ${{ job.maxpay }}</p>
+        <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('editjob', jobid=job.id) }}">Update</a>
+            <button class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+        </div>
+    </div>
+</article>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Job?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form action="{{ url_for('deletejob', jobid=job.id) }}" method="POST">
+                    <input class="btn btn-danger" type="submit" value="Delete">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

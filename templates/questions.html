@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form action="/" method="post">
-        <input type="hidden" name="email" value="admin">
-        <input type="submit" value="back">
-    </form>
+<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('overview') }}">Back</a>
     Questions:
     <br>
     {% for question in questions %}
         {{ question.question }} | {{ question.status }}
+        {{ question.date_asked.strftime("%d-%m-%Y") }}
+        {{ post.date_asked.strftime("%d-%m-%Y") }}
         <form method="post">
             <input type="hidden" name="id" value="{{ question.id }}">
             <textarea name="answer">{{ question.answer }}</textarea>

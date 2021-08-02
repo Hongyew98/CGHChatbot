@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('overview') }}">Overview</a>
+{% for job in jobs.items %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <a class="article-title mr-2" href="{{ url_for('job', title=job.title) }}">{{ job.title }}</h2>
+                <small class="text-muted">listed on {{ job.created.strftime("%d-%m-%Y") }}</small><br>
+                <small class="article-content">{{ job.type }}</small>
+            </div>
+                <small class="article-content">${{ job.minpay }} - S{{ job.maxpay }}</p>
+            <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('editjob', jobid=job.id) }}">Update</a>
+                <button class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+            </div>
+        </div>
+    </article>
+{% endfor %}
+{% for pagenum in jobs.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=3) %}
+    {% if pagenum %}
+        {% if posts.page == pagenum %}
+            <a class="btn btn-info mb-4" href="{{ url_for('alljobs', page=pagenum) }}">{{ pagenum }}</a>
+        {% else %}
+            <a class="btn btn-outline-info mb-4" href="{{ url_for('alljobs', page=pagenum) }}">{{ pagenum }}</a>
+        {% endif %}
+    {% else %}
+        ...
+    {% endif %}
+{% endfor %}
+{% endblock %}

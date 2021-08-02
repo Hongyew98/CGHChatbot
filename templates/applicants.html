@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <form action="/" method="post">
-        <input type="hidden" name="email" value="admin">
-        <input type="submit" value="back">
-    </form>
-    <h3>Applicants</h3>
+<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('overview') }}">Back</a>
+<h1 class="mb-3">Applicants for {{ title }}</h1>
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <a class="mr-2", href="{{ url_for('applicant'), appid=applicant.id }}">View</a>
+            </div>
+        </div>
+    </article>
+
+
+    <!-- <h3>Applicants</h3>
     Sort by:
     <form action="#", method="post">
         <select name="sort">
@@ -76,5 +83,16 @@
             {% endif %}
         {% endfor %}
 
+    {% endif %} -->
+{% for pagenum in jobs.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=3) %}
+    {% if pagenum %}
+        {% if posts.page == pagenum %}
+            <a class="btn btn-info mb-4" href="{{ url_for('applicants', title=application.job, page=pagenum) }}">{{ pagenum }}</a>
+        {% else %}
+            <a class="btn btn-outline-info mb-4" href="{{ url_for('applicants', title=application.job, page=pagenum) }}">{{ pagenum }}</a>
+        {% endif %}
+    {% else %}
+        ...
     {% endif %}
+{% endfor %}
 {% endblock %}
