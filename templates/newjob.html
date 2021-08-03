@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('overview') }}">Cancel</a>
+<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('alljobs') }}">Cancel</a>
 <div class="content-section">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
@@ -47,16 +47,27 @@
                 {% endif %}
             </div>
             <div class="form-group">
-                {{ form.pay.label(class="form-control-label") }}
-                {% if form.pay.errors %}
-                    {{ form.pay(class="form-control-sm is-invalid") }}
+                {{ form.minpay.label(class="form-control-label") }}
+                {% if form.minpay.errors %}
+                    {{ form.minpay(class="form-control-sm is-invalid") }}
                     <div class="invalid-feedback">
-                        {% for error in form.pay.errors %}
+                        {% for error in form.minpay.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ form.pay(class="form-control-sm") }}
+                    {{ form.minpay(class="form-control-sm") }}
+                {% endif %}
+                ,
+                {% if form.maxpay.errors %}
+                    {{ form.maxpay(class="form-control-sm is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.maxpay.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.maxpay(class="form-control-sm") }}
                 {% endif %}
             </div>
         </fieldset>

@@ -2,20 +2,32 @@
 
 {% block content %}
 <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('overview') }}">Back</a>
-<h1 class="mb-3">Applicants for {{ title }}</h1>
+{% if not title %}
+    <h1 class="mb-3">All Applicants</h1>
+{% else %}
+    <h1 class="mb-3">Applicants for {{ title }}</h1>
+{% endif %}
     <article class="media content-section">
         <div class="media-body">
-            <div class="article-metadata">
-                <a class="mr-2", href="{{ url_for('applicant'), appid=applicant.id }}">View</a>
-            </div>
+            {% for applicant in applicants %}
+                <div class="article-metadata">
+                    <p>
+                        ID: {{ applicant.id }} | 
+                        Position: {{ applicant.job }} | 
+                        Test score: {{ applicant.score }} | 
+                        Status: {{ applicant.status }}
+                        <a class="mr-2", href="{{ url_for('applicant', appid=applicant.id) }}">View</a>
+                    </p>
+                </div>
+            {% endfor %}
         </div>
     </article>
 
 
-    <!-- <h3>Applicants</h3>
+    <h3>Applicants</h3>
     Sort by:
     <form action="#", method="post">
-        <select name="sort">
+        <select name="sort" onchange="this.form.submit()">
             <option disabled selected value="">ID</option required>
             <option value="Processing">Processing</option>
             <option value="Shortlisted">Shortlisted</option>
@@ -83,13 +95,14 @@
             {% endif %}
         {% endfor %}
 
-    {% endif %} -->
-{% for pagenum in jobs.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=3) %}
+    {% endif %}
+
+{% for pagenum in applicant.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=3) %}
     {% if pagenum %}
         {% if posts.page == pagenum %}
-            <a class="btn btn-info mb-4" href="{{ url_for('applicants', title=application.job, page=pagenum) }}">{{ pagenum }}</a>
+            <a class="btn btn-info mb-4" href="{{ url_for('applicant', title=application.job, page=pagenum) }}">{{ pagenum }}</a>
         {% else %}
-            <a class="btn btn-outline-info mb-4" href="{{ url_for('applicants', title=application.job, page=pagenum) }}">{{ pagenum }}</a>
+            <a class="btn btn-outline-info mb-4" href="{{ url_for('applicant', title=application.job, page=pagenum) }}">{{ pagenum }}</a>
         {% endif %}
     {% else %}
         ...

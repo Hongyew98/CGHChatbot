@@ -6,6 +6,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from . import app
 from .forms import *
 from .models import *
+from urllib.parse import quote, unquote
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -19,8 +20,8 @@ def overview():
 @app.route("/alljobs")
 def alljobs():
     page = request.args.get("page", 1, type=int)
-    jobs = Job.query.order_by(Job.date_created.desc()).paginate(page=page, per_page=8)
-    return render_template("alljobs.html", jobs=jobs)
+    job = Job.query.order_by(Job.date_created.desc()).paginate(page=page, per_page=8)
+    return render_template("alljobs.html", job=job)
 
 @app.route("/job/new", methods=["GET", "POST"])
 def newjob():
@@ -33,13 +34,15 @@ def newjob():
         return redirect(url_for("newjob"))
     return render_template("newjob.html", legend="New Job", form=form)
 
-@app.route("/job/<string:title>")
-def job(title):
+@app.route("/job/<string:titlequote>")
+def job(titlequote):
+    title=unquote(titlequote)
     job = Job.query.filter_by(title=title).first()
     return render_template("job.html", job=job)
 
-@app.route("/job/<string:title>/edit", methods=["GET", "POST"])
-def editjob(title):
+@app.route("/job/<string:titlequote>/edit", methods=["GET", "POST"])
+def editjob(titlequote):
+    title=unquote(titlequote)
     job = Job.query.filter_by(title=title).first()
     form = JobForm()
     form.title.data=job.title
@@ -55,24 +58,28 @@ def editjob(title):
         job.maxpay=form.maxpay.data
         db.session.commit()
         flash("Job listing edited", "success")
-        return redirect(url_for("job"))
+        return redirect(url_for("job", titlequote=quote(job.title)))
     return render_template("newjob.html", legend="Edit Job", form=form)
 
-@app.route("/job/<string:title>/delete", methods=["POST"])
-def deletejob(title):
+@app.route("/job/<string:titlequote>/delete", methods=["POST"])
+def deletejob(titlequote):
+    title=unquote(titlequote)
     job = Job.query.filter_by(title=title).first()
     db.session.delete(job)
     db.session.commit()
     flash("Job listing deleted", "success")
     return redirect(url_for("alljobs"))
 
-
-
-@app.route("/<string:title>/applicants", methods=["GET", "POST"])
-def applicants(title):
+@app.route("/<string:titlequote>/applicants", methods=["GET", "POST"])
+@app.route("/applicants", methods=["GET", "POST"])
+def applicants(titlequote=""):
+    title=unquote(titlequote)
     page = request.args.get("page", 1, type=int)
-    applicants=Application.query.filter_by(job=title).first().paginate(page=page, per_page=10)
-    return render_template("applicants.html", applicants=applicants, title=title)
+    if not title:
+        applicant=Application.query.paginate(page=page, per_page=10)
+    else:
+        applicant=Application.query.filter_by(job=title).first().paginate(page=page, per_page=10)
+    return render_template("applicants.html", applicant=applicant, title=title)
 
 @app.route("/applicant/<int:appid>", methods=["GET", "POST"])
 def applicant(appid):
@@ -92,7 +99,7 @@ def applicant(appid):
 
 @app.route("/completed")
 def completed():
-    return render_template("completed.html", applicants=Application.query.filter_by(status=completed).first())
+    return render_template("completed.html", applicant=Application.query.filter_by(status="Completed").first())
 
 @app.route("/questions", methods=["GET", "POST"])
 def questions():

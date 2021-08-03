@@ -2,17 +2,15 @@
 
 {% block content %}
 <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('overview') }}">Back</a>
-    <h3>Applicants</h3>
+    <h3>Completed</h3>
     {% for applicant in applicants %}
-        {% if  applicant.status == ("Accepted" or "Rejected") %}
         <p>
             ID: {{ applicant.id }} | 
             Position: {{ applicant.job }} | 
             Test score: {{ applicant.score }} | 
             Status: {{ applicant.status }}
-            <a href="/id{{ applicant.id }}">View</a>
+            <a href="{{ url_for('applicant', appid=applicant.id) }}">View</a>
             <a href="/">Delete</a>
         </p>
-        {% endif %}
     {% endfor %}
 {% endblock %}
