@@ -25,10 +25,9 @@ class User(db.Model):
 class Application(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     job = db.Column(db.String(100), nullable=False)
-    cv = db.Column(db.String(30))
     score = db.Column(db.Integer)
-    status = db.Column(db.String)
-    comments = db.Column(db.Text)
+    status = db.Column(db.String, default="Applied")
+    comments = db.Column(db.Text, default="")
     date_applied = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
@@ -39,8 +38,8 @@ class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String, nullable=False)
     question = db.Column(db.Text, nullable=False)
-    status = db.Column(db.String)
-    answer = db.Column(db.String)
+    status = db.Column(db.String, default="Pending")
+    answer = db.Column(db.Text, default="")
     date_asked = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __repr__(self):
@@ -48,7 +47,7 @@ class Question(db.Model):
 
 class Job(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String, nullable=False)
+    title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
     type = db.Column(db.String)
     minpay = db.Column(db.Integer)

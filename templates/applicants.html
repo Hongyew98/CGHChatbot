@@ -1,7 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('overview') }}">Back</a>
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('overview') }}" style="text-decoration:none;">Overview</a></li>
+        {% if not title %}
+            <li class="breadcrumb-item active" aria-current="page">All Applicants</li>
+        {% else %}
+            <li class="breadcrumb-item active" aria-current="page">Applicants For {{ title }}</li>
+        {% endif %}
+    </ol>
+</nav>
 {% if not title %}
     <h1 class="mb-3">All Applicants</h1>
 {% else %}
@@ -9,100 +18,72 @@
 {% endif %}
     <article class="media content-section">
         <div class="media-body">
-            {% for applicant in applicants %}
-                <div class="article-metadata">
-                    <p>
-                        ID: {{ applicant.id }} | 
-                        Position: {{ applicant.job }} | 
-                        Test score: {{ applicant.score }} | 
-                        Status: {{ applicant.status }}
-                        <a class="mr-2", href="{{ url_for('applicant', appid=applicant.id) }}">View</a>
-                    </p>
-                </div>
-            {% endfor %}
+            <div class="row mt-2 mb-3 text-end">
+            <form method="POST">
+                View:
+                <select name="sort" onchange="this.form.submit()">
+                    {% if sort == "Applied" %}
+                        <option value="All">All</option>
+                        <option selected value="Applied">Applied</option required>
+                        <option value="Awaiting Interview">Awaiting Interview</option>
+                        <option value="Reviewed">Reviewed</option>
+                    {% elif sort == "Awaiting Interview" %}
+                        <option value="All">All</option>
+                        <option value="Applied">Applied</option required>
+                        <option selected value="Awaiting Interview">Awaiting Interview</option>
+                        <option value="Reviewed">Reviewed</option>
+                    {% elif sort == "Reviewed" %}
+                        <option value="All">All</option>
+                        <option value="Applied">Applied</option required>
+                        <option value="Awaiting Interview">Awaiting Interview</option>
+                        <option selected value="Reviewed">Reviewed</option>
+                    {% else %}
+                        <option selected value="All">All</option>
+                        <option value="Applied">Applied</option required>
+                        <option value="Awaiting Interview">Awaiting Interview</option>
+                        <option value="Reviewed">Reviewed</option>
+                    {% endif %}
+                </select>
+            </form>
         </div>
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Position</th>
+                                <th scope="col">Quiz Score</th>
+                                <th scope="col">CV</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for applicant in applicants.items %}
+                            <tr>
+                                <th scope="row"><a class="mr-2 text-decoration-none", href="{{ url_for('applicant', appid=applicant.user_id) }}">{{ applicant.user_id }}</a></th>
+                                <td><a class="mr-2 text-dark text-decoration-none", href="{{ url_for('applicants', titlequote=applicant.job) | urlencode }}">{{ applicant.job }}</a></td>
+                                <td class="text-center"><a class="mr-2 text-decoration-none", href="{{ url_for('quiz') }}">{{ applicant.score }}</a></td>
+                                <td><a href="#" style="text-decoration:none;">sample_cv.pdf</a></td>
+                                <td>{{ applicant.status }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                </table>
+                </div>
     </article>
 
 
-    <h3>Applicants</h3>
-    Sort by:
-    <form action="#", method="post">
-        <select name="sort" onchange="this.form.submit()">
-            <option disabled selected value="">ID</option required>
-            <option value="Processing">Processing</option>
-            <option value="Shortlisted">Shortlisted</option>
-        </select>
-    </form>
-    {% if sort == "Processing" %}
-        {% for applicant in applicants %}
-            {% if applicant.status == "Processing" %}
-                <p>
-                    ID: {{ applicant.id }} | 
-                    Position: {{ applicant.job }} | 
-                    Test score: {{ applicant.score }} | 
-                    Status: {{ applicant.status }}
-                    <a href="/id{{ applicant.id }}">View</a>
-                    <a href="/">Delete</a>
-                </p>
-            {% endif %}
-            {% if  applicant.status == "Shortlisted" %}
-                <p>
-                    ID: {{ applicant.id }} | 
-                    Position: {{ applicant.job }} | 
-                    Test score: {{ applicant.score }} | 
-                    Status: {{ applicant.status }}
-                    <a href="/id{{ applicant.id }}">View</a>
-                    <a href="/">Delete</a>
-                </p>
-            {% endif %}
-        {% endfor %}
+     
 
-    {% elif sort == "Shortlisted" %}
-        {% for applicant in applicants %}
-            {% if  applicant.status == "Shortlisted" %}
-                <p>
-                    ID: {{ applicant.id }} | 
-                    Position: {{ applicant.job }} | 
-                    Test score: {{ applicant.score }} | 
-                    Status: {{ applicant.status }}
-                    <a href="/id{{ applicant.id }}">View</a>
-                    <a href="/">Delete</a>
-                </p>
-            {% endif %}
-            {% if  applicant.status == "Processing" %}
-                <p>
-                    ID: {{ applicant.id }} | 
-                    Position: {{ applicant.job }} | 
-                    Test score: {{ applicant.score }} | 
-                    Status: {{ applicant.status }}
-                    <a href="/id{{ applicant.id }}">View</a>
-                    <a href="/">Delete</a>
-                </p>
-            {% endif %}
-        {% endfor %}
 
-    {% else %}
-        {% for applicant in applicants %}
-            {% if  applicant.status == "Processing" or applicant.status == "Shortlisted" %}
-                <p>
-                    ID: {{ applicant.id }} | 
-                    Position: {{ applicant.job }} | 
-                    Test score: {{ applicant.score }} | 
-                    Status: {{ applicant.status }}
-                    <a href="/id{{ applicant.id }}">View</a>
-                    <a href="/">Delete</a>
-                </p>
-            {% endif %}
-        {% endfor %}
+                
+    
 
-    {% endif %}
-
-{% for pagenum in applicant.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=3) %}
+{% for pagenum in applicants.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=3) %}
     {% if pagenum %}
-        {% if posts.page == pagenum %}
-            <a class="btn btn-info mb-4" href="{{ url_for('applicant', title=application.job, page=pagenum) }}">{{ pagenum }}</a>
+        {% if applicants.page == pagenum %}
+            <a class="btn btn-primary mb-4" href="{{ url_for('applicants', titlequote=title, page=pagenum) | urlencode }}">{{ pagenum }}</a>
         {% else %}
-            <a class="btn btn-outline-info mb-4" href="{{ url_for('applicant', title=application.job, page=pagenum) }}">{{ pagenum }}</a>
+            <a class="btn btn-outline-primary mb-4" href="{{ url_for('applicants', titlequote=title, page=pagenum) | urlencode }}">{{ pagenum }}</a>
         {% endif %}
     {% else %}
         ...

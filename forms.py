@@ -34,8 +34,8 @@ class JobForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired()], render_kw={"autocomplete":"off"})
     description = TextAreaField("Description", validators=[DataRequired()])
     type = SelectField("Type", validators=[DataRequired()], choices=["Full Time", "Part Time", "Intern"])
-    minpay = IntegerField("Min Pay", validators=[DataRequired()])
-    maxpay = IntegerField("Max Pay", validators=[DataRequired()])
+    minpay = IntegerField("Min Pay", validators=[DataRequired()], render_kw={"autocomplete":"off"})
+    maxpay = IntegerField("Max Pay", validators=[DataRequired()], render_kw={"autocomplete":"off"})
     submit = SubmitField("Save")
 
 #class QuestionForm(FlaskForm):

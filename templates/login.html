@@ -1,53 +1,72 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<style>
 
-{% block content %}
+</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+
+    <title>CGH Recruitment</title>
+
+</head>
+<body>
+    <div class="row justify-content-center" style="padding:0 6rem 6rem">
+    <div class="col-md-6">
+<div class="text-center mt-5"><img class="mb-5" src="{{ url_for('static', filename='cghLogoOnly.png') }}" alt="" width="140" height="140"></div>
 <div class="content-section">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Login</legend>
-            <div class="form-group">
-                {{ form.email.label(class="form-control-label") }}
+            <legend class="border-bottom mb-4 text-center">Login</legend>
+            <div class="mb-3">
+                <!-- {{ form.email.label(class="form-label") }} -->
                 {% if form.email.errors %}
-                    {{ form.email(class="form-control-sm is-invalid") }}
+                    {{ form.email(class="form-control is-invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.email.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ form.email(class="form-control-sm", autocomplete="off", autofocus="true") }}
+                    {{ form.email(class="form-control", autocomplete="off", autofocus="true", placeholder="Email address") }}
                 {% endif %}
             </div>
-            <div class="form-group">
-                {{ form.password.label(class="form-control-label is-invalid") }}
+            <div class="">
                 {% if form.password.errors %}
-                    {{ form.password(class="form-control-sm") }}
+                    {{ form.password(class="form-control is-invalid") }}
                     <div class="invalid-feedback">
                         {% for error in form.password.errors %}
                             <span>{{ error }}</span>
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ form.password(class="form-control-sm", autocomplete="off") }}
+                    {{ form.password(class="form-control", autocomplete="off", placeholder="Password") }}
                 {% endif %}
             </div>
-            <div class="form-check">
-                {{ form.remember.label(class="form-check-label") }}
+            <div class="text-end">
+                <small class="text-muted">
+                <a href="#" style="text-decoration:none">Forgot Password?</a>
+                </small>
+            </div>
+            <div class="mb-3 form-check">
+                {{ form.remember.label(class="form-check-label", for="remember") }}
                 {{ form.remember(class="form-check-input") }}
             </div>
         </fieldset>
-        <div class="form-group">
-            {{ form.submit(class="btn btn-outline-info") }}
+        <div class="d-grid col-6 mx-auto mb-3">
+            {{ form.submit(class="btn btn-primary") }}
         </div>
-        <small class="text-muted ml-2">
-            <a href="#">Forgot Password?</a>
-        </small>
     </form>
 </div>
-<div class="border-top pt-3">
+<div class="border-top pt-4 text-center">
     <small class="text-muted">
-        Don't Have an Account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
+        Don't Have an Account? <a class="ml-2" href="{{ url_for('login') }}">Sign Up</a>
     </small>
 </div>
-{% endblock %}
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

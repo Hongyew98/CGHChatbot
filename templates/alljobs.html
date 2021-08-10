@@ -1,39 +1,48 @@
 {% extends "base.html" %}
 
 {% block content %}
-<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('overview') }}">Overview</a>
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url_for('overview') }}" style="text-decoration:none;">Overview</a></li>
+    <li class="breadcrumb-item active" aria-current="page">All Jobs</li>
+  </ol>
+</nav>
+    <h1 class="mb-3">All Jobs</h1>
 {% for job in job.items %}
     <article class="media content-section">
         <div class="media-body">
-            <div class="article-metadata">
-                <a class="article-title mr-2" href="{{ url_for('job', titlequote=job.title) | urlencode }}">{{ job.title }}</a><br>
+          <div class="row">
+            <div class="col">
+                <a class="article-title text-decoration-none text-primary" href="{{ url_for('job', titlequote=job.title) | urlencode }}">{{ job.title }}</a>
                 <small class="text-muted">listed on {{ job.date_created.strftime("%d-%m-%Y") }}</small><br>
                 <small class="article-content">{{ job.type }}</small>
+                <small class="article-content">${{ job.minpay }} - S{{ job.maxpay }}</small>
             </div>
-                <small class="article-content">${{ job.minpay }} - S{{ job.maxpay }}</p>
-            <div>
+            <div class="col text-end">
                 <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('editjob', titlequote=job.title) | urlencode }}">Update</a>
-                <button class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                <button type="button" class="btn btn-danger btn-sm mx-auto" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
             </div>
+          </div>
         </div>
     </article>
-{% endfor %}
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Confirm Delete?</h5>
+          </div>
+          <div class="modal-body">
+            <h6>This action is irreversible</h6>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" href="{{ url_for('deletejob', titlequote=job.title) | urlencode }}" class="btn btn-danger">Delete</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+{% endfor %}
+
 {% for pagenum in job.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=3) %}
     {% if pagenum %}
         {% if job.page == pagenum %}

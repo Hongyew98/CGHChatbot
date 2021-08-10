@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('overview') }}">Back</a>
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('overview') }}" style="text-decoration:none;">Overview</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Completed</li>
+    </ol>
+</nav>
     <h3>Completed</h3>
     {% for applicant in applicants %}
         <p>
