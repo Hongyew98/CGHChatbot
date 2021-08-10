@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block content %}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url_for('overview') }}" style="text-decoration:none;">Overview</a></li>
+    <li class="breadcrumb-item"><a href="{{ url_for('applicants') }}" style="text-decoration:none;">All Applicants</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Quiz</li>
+  </ol>
+</nav>
+<div class="row">
+    <h1 class="col mb-3">Quiz</h1>
+    <h5 class="col text-end mt-3"> Score 8/10</h5>
+</div>
+    <article id="correct" class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <div class="row">
+                    <h4 class="col">Q1</h4>
+                    <small class="col text-end text-muted mt-1">1/1</small>
+                </div>
+            </div class="article-content">
+            <div class="row">
+                <div class="col-7">
+                <p>What is the colour of the CGH Logo?</p>
+                <p>Answer: Blue</p>
+            </div>
+            <div class="col text-end mt-5">
+                <button type="button" class="btn btn-warning btn-sm">Edit</button>
+            </div>
+            </div>
+        </div>
+    </article>
+
+    <article id="correct" class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <div class="row">
+                    <h4 class="col">Q2</h4>
+                    <small class="col text-end text-muted mt-1">1/1</small>
+                </div>
+            </div class="article-content">
+            <div class="row">
+                <div class="col-7">
+                <p>How many fingers do you have?</p>
+                <p>Answer: 10</p>
+            </div>
+            <div class="col text-end mt-5">
+                <button type="button" class="btn btn-warning btn-sm">Edit</button>
+            </div>
+            </div>
+        </div>
+    </article>
+
+    <article id="correct" class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <div class="row">
+                    <h4 class="col">Q3</h4>
+                    <small class="col text-end text-muted mt-1">1/1</small>
+                </div>
+            </div class="article-content">
+            <div class="row">
+                <div class="col-7">
+                <p>What does CGH mean?</p>
+                <p>Answer: Changi General Hospital</p>
+            </div>
+            <div class="col text-end mt-5">
+                <button type="button" class="btn btn-warning btn-sm">Edit</button>
+            </div>
+            </div>
+        </div>
+    </article>
+
+    <article id="correct" class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <div class="row">
+                    <h4 class="col">Q4</h4>
+                    <small class="col text-end text-muted mt-1">1/1</small>
+                </div>
+            </div class="article-content">
+            <div class="row">
+                <div class="col-7">
+                <p>How many questions are there in this test?</p>
+                <p>Answer: 10</p>
+            </div>
+            <div class="col text-end mt-5">
+                <button type="button" class="btn btn-warning btn-sm">Edit</button>
+            </div>
+            </div>
+        </div>
+    </article>
+
+    <article id="wrong" class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <div class="row">
+                    <h4 class="col">Q5</h4>
+                    <small class="col text-end text-muted mt-1">0/1</small>
+                </div>
+            </div class="article-content">
+            <div class="row">
+                <div class="col-7">
+                <p>Which country is CGH in?</p>
+                <p>Answer: China</p>
+            </div>
+            <div class="col text-end mt-5">
+                <button type="button" class="btn btn-warning btn-sm">Edit</button>
+            </div>
+            </div>
+        </div>
+    </article>
+
+    <article id="correct" class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <div class="row">
+                    <h4 class="col">Q6</h4>
+                    <small class="col text-end text-muted mt-1">1/1</small>
+                </div>
+            </div class="article-content">
+            <div class="row">
+                <div class="col-7">
+                <p>What is the colour of the CGH Logo?</p>
+                <p>Answer: Blue</p>
+            </div>
+            <div class="col text-end mt-5">
+                <button type="button" class="btn btn-warning btn-sm">Edit</button>
+            </div>
+            </div>
+        </div>
+    </article>
+
+    <article id="correct" class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <div class="row">
+                    <h4 class="col">Q7</h4>
+                    <small class="col text-end text-muted mt-1">1/1</small>
+                </div>
+            </div class="article-content">
+            <div class="row">
+                <div class="col-7">
+                <p>Must we wear mask outside?</p>
+                <p>Answer: Yes</p>
+            </div>
+            <div class="col text-end mt-5">
+                <button type="button" class="btn btn-warning btn-sm">Edit</button>
+            </div>
+            </div>
+        </div>
+    </article>
+
+    <article id="wrong" class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <div class="row">
+                    <h4 class="col">Q8</h4>
+                    <small class="col text-end text-muted mt-1">0/1</small>
+                </div>
+            </div class="article-content">
+            <div class="row">
+                <div class="col-7">
+                <p>What is 1+1?</p>
+                <p>Answer: 3</p>
+            </div>
+            <div class="col text-end mt-5">
+                <button type="button" class="btn btn-warning btn-sm">Edit</button>
+            </div>
+            </div>
+        </div>
+    </article>
+
+    <article id="correct" class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <div class="row">
+                    <h4 class="col">Q9</h4>
+                    <small class="col text-end text-muted mt-1">1/1</small>
+                </div>
+            </div class="article-content">
+            <div class="row">
+                <div class="col-7">
+                <p>What phone are you using?</p>
+                <p>Answer: IPhone</p>
+            </div>
+            <div class="col text-end mt-5">
+                <button type="button" class="btn btn-warning btn-sm">Edit</button>
+            </div>
+            </div>
+        </div>
+    </article>
+
+    <article id="correct" class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <div class="row">
+                    <h4 class="col">Q10</h4>
+                    <small class="col text-end text-muted mt-1">1/1</small>
+                </div>
+            </div class="article-content">
+            <div class="row">
+                <div class="col-7">
+                <p>Is this the last question?</p>
+                <p>Answer: Yes</p>
+            </div>
+            <div class="col text-end mt-5">
+                <button type="button" class="btn btn-warning btn-sm">Edit</button>
+            </div>
+            </div>
+        </div>
+    </article>
+
+{% endblock %}

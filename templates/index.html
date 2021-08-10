@@ -1,31 +1,13 @@
 {% extends "base.html" %}
 
-{% block body %}
-    
-    <a href="/" style="text-decoration: none; color: black; text-align: end;justify-content: end; display: flex;">
-        <span style="padding: 0.5rem 0.2rem;">Log Out</span>
-        <i style="padding: 0.35rem 0.2rem;" class="material-icons">logout</i>
-    </a>
-    <div class="nav">
-        <a class="goto" href="/newlisting" style="text-decoration: none; color:black; border-style: solid;">
-            <i style="font-size: 5rem; color: grey" class="material-icons">add_circle_outline</i>
-            <br>
-            <p>New Listing</p>
-        </a>
-        <a class="goto" href="/applicants" style="text-decoration: none; border-style: solid; color:black">
-            <i style="font-size: 5rem; color: grey" class="material-icons">more_time</i>
-            <br>
-            <p>Pending</p>
-        </a>
-        <a class="goto" href="/completed" style="text-decoration: none; border-style: solid; color:black">
-            <i style="font-size: 5rem; color: grey" class="material-icons">task_alt</i>
-            <br>
-            <p>Completed</p>
-        </a>
-        <a class="goto" href="/questions" style="text-decoration: none; border-style: solid; color:black">
-            <i style="font-size: 5rem; color: grey" class="material-icons">help_outline</i>
-            <br>
-            <p>Questions</p>
-        </a>
-    </div>
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 {% endblock %}

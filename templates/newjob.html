@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('overview') }}" style="text-decoration:none;">Overview</a></li>
+        <li class="breadcrumb-item active" aria-current="page">New Job</li>
+    </ol>
+</nav>
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">{{ legend }}</legend>
+            <div class="form-group">
+                {{ form.title.label(class="form-control-label") }}
+                {% if form.title.errors %}
+                    {{ form.title(class="form-control-sm is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.title.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.title(class="form-control-sm") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.description.label(class="form-control-label") }}
+                {% if form.description.errors %}
+                    {{ form.description(class="form-control-sm is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.description.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.description(class="form-control-sm") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.type.label(class="form-control-label") }}
+                {% if form.type.errors %}
+                    {{ form.type(class="form-control-sm is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.type.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.type(class="form-control-sm") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.minpay.label(class="form-control-label") }}
+                {% if form.minpay.errors %}
+                    {{ form.minpay(class="form-control-sm is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.minpay.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.minpay(class="form-control-sm") }}
+                {% endif %}
+                ,
+                {% if form.maxpay.errors %}
+                    {{ form.maxpay(class="form-control-sm is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.maxpay.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.maxpay(class="form-control-sm") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+{% endblock %}

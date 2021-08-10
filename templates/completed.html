@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
-{% block body %}
-    <form action="/" method="post">
-        <input type="hidden" name="email" value="admin">
-        <input type="submit" value="back">
-    </form>
-    <h3>Applicants</h3>
+{% block content %}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('overview') }}" style="text-decoration:none;">Overview</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Completed</li>
+    </ol>
+</nav>
+    <h3>Completed</h3>
     {% for applicant in applicants %}
-        {% if  applicant.status == ("Accepted" or "Rejected") %}
         <p>
             ID: {{ applicant.id }} | 
             Position: {{ applicant.job }} | 
             Test score: {{ applicant.score }} | 
             Status: {{ applicant.status }}
-            <a href="/id{{ applicant.id }}">View</a>
+            <a href="{{ url_for('applicant', appid=applicant.id) }}">View</a>
             <a href="/">Delete</a>
         </p>
-        {% endif %}
     {% endfor %}
 {% endblock %}

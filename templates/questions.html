@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 
-{% block body %}
-    <form action="/" method="post">
-        <input type="hidden" name="email" value="admin">
-        <input type="submit" value="Back">
-    </form>
-    Questions:
+{% block content %}
+<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('overview') }}" style="text-decoration:none;">Overview</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Questions</li>
+    </ol>
+</nav>
+    <h1>Questions</h1>
     <br>
     {% for question in questions %}
-        {{ question.question }} | {{ question.status }}
+        {{ question.question }} | {{ question.status }} | 
+        {{ question.date_asked.strftime("%d-%m-%Y") }}
         <form method="post">
             <input type="hidden" name="id" value="{{ question.id }}">
             <textarea name="answer">{{ question.answer }}</textarea>
