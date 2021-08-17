@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/chatbot.css') }}" />
+<section class="chatbox">
+    <header class="chatbox-header">
+        Chatbot
+    </header>
+    <main class="chatbox-chat">
+        <div class="msg left-msg">
+            <div><img class="msg-img" src="{{ url_for('static', filename='cghLogoOnlyCircle.png') }}" alt=""/></div>
+            <div class="msg-bubble">
+                <div class="msg-info">
+                    <div class="msg-info-name">Chatbot</div>
+                    <div class="msg-info-time"><span id="datetime"></span></div>
+                </div>
+                <div class="msg-text">
+                    Hi, nice to meet you! 😄
+                </div>
+            </div>
+        </div>
+    </main>
+    <form action="" class="chatbox-inputarea">
+            <input type="text" onKeyup="checkForm()" class="form-control" placeholder="Type a message" aria-label="message" aria-describedby="button-addon2">
+            <button class="btn btn-outline-primary chatbox-send-btn" type="submit" id="button-addon2">Send</button>
+    </form>
+</section>
+<script>
+    const chatboxForm = get(".chatbox-inputarea");
+    const chatboxInput = get(".form-control");
+    const chatboxChat = get(".chatbox-chat");
+    const BOT_IMG = "{{ url_for('static', filename='cghLogoOnlyCircle.png') }}";
+    const PERSON_IMG = "{{ url_for('static', filename='default.png') }}";
+    const BOT_NAME = "ChatBot";
+    const PERSON_NAME = "You";
+    chatboxForm.addEventListener("submit", event => {
+        event.preventDefault();
+        const msgText = chatboxInput.value;
+        if (!msgText) return;
+        appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
+        chatboxInput.value = "";
+        botResponse(msgText);
+    });
+    function appendMessage(name, img, side, text) {
+        const msgHTML = `
+                        <div class="msg ${side}-msg">
+                            <div><img class="msg-img" src="${img}" alt=""/></div>
+                            <div class="msg-bubble">
+                                <div class="msg-info">
+                                    <div class="msg-info-name">${name}</div>
+                                    <div class="msg-info-time">${getTime(new Date())}</div>
+                                </div>
+                                <div class="msg-text">${text}</div>
+                            </div>
+                        </div>
+                        `;
+        chatboxChat.insertAdjacentHTML("beforeend", msgHTML);
+        chatboxChat.scrollTop += 500;
+    }
+    function botResponse(rawText) {
+        // Bot Response
+        $.get("{{ url_for('bot.send') }}", { msg: rawText }).done(function (data) {
+        console.log(rawText);
+        console.log(data);
+        const msgText = data;
+        appendMessage(BOT_NAME, BOT_IMG, "left", msgText);
+        });
+    }
+    // Utils
+    function get(selector, root = document) {
+        return root.querySelector(selector);
+    }
+    function getTime(date) {
+        const h = "0" + date.getHours();
+        const m = "0" + date.getMinutes();
+        return `${h.slice(-2)}:${m.slice(-2)}`;
+    }
+    var dt = new Date();
+    document.getElementById("datetime").innerHTML = (("0"+dt.getHours()).slice(-2)) +":"+ (("0"+dt.getMinutes()).slice(-2));
+</script>
+{% endblock %}

@@ -1,10 +1,27 @@
-from . import db, login_manager
+from os import name
+from flask import current_app
 from datetime import datetime
 from flask_login import UserMixin
-from flask_migrate import Migrate
 
-#To edit db schema
-#migrate = Migrate(app, db)
+if __name__ == "__main__":
+    from flask import Flask
+    from flask_sqlalchemy import SQLAlchemy
+    from flask_login import LoginManager
+    from config import Config
+
+    app = Flask(__name__)
+    app.config.from_object(Config)
+    db = SQLAlchemy(app)
+    login_manager = LoginManager(app)
+
+    # Uncomment following to edit db schema
+    # from flask_migrate import Migrate
+    # migrate = Migrate(app, db)
+    
+    db.create_all()
+
+else:
+    from cghChatbot import db, login_manager
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -44,15 +61,3 @@ class Question(db.Model):
 
     def __repr__(self):
         return f"Details('{self.job}','{self.cv}','{self.score}','{self.status}')"
-
-class Job(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text, nullable=False)
-    type = db.Column(db.String)
-    minpay = db.Column(db.Integer)
-    maxpay = db.Column(db.Integer)
-    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
-if __name__ == "__main__":
-    db.create_all()

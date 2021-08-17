@@ -1,0 +1,29 @@
+
+{
+    "intents": [
+      {"tag": "greeting",
+       "patterns": ["Hi", "Hey", "Hello", "How are you", "Is anyone there", "Good day", "Good morning", "Good afternoon", "Good evening", "Nice to meet you"],
+       "responses": ["Hello! How can I help you?", "Hi! Anything I can help you with?", "Hey! Need help with anything?"]
+      }
+      ,{"tag": "goodbye",
+       "patterns": ["Bye", "See you", "Goodbye", "Bye Bye", "bb", "cya", "c u", "see u"],
+       "responses": ["See you!", "Have a nice day!", "Bye!"]
+      }
+      ,{"tag": "thanks",
+       "patterns": ["Thanks", "Thank you", "ty"],
+       "responses": ["Happy to help!", "Any time!", "My pleasure!", "You are welcome!", "No problem!"]
+      }
+      ,{"tag": "name",
+        "patterns": ["What is your name", "Whats your name", "Tell me your name", "Who are you", "Tell me about yourself", "Who is this"],
+        "responses": ["I am CGH Chatbot, nice to meet you!", "My name is CGH Chatbot, nice to meet you!"]
+        }
+      ,{"tag": "options",
+         "patterns": ["What can you do", "How can you help", "What do you know", "What is your purpose"],
+         "responses": ["I can answer any questions you might have about CGH", "I can give you information about CGH"]
+        }
+      ,{"tag": "info",
+        "patterns": ["Tell me about cgh", "Where is cgh", "What is working at cgh like", "cgh location", "Where cgh", "How to get to cgh"],
+        "responses": ["CGH is located at 2 Simei Street 3, Singapore 529889. The nearest mrt is Simei. Buses: 118, 118A, 17, 5, 9"]
+        }
+    ]
+  }
