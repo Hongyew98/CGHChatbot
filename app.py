@@ -1,4 +1,4 @@
-from cghChatbot import create_app, db
+from cghChatbot import create_app
 
 app = create_app()
 

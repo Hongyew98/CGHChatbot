@@ -8,6 +8,10 @@ h1, h2, h3, h4, h5, h6 {
 	color: #444444;
 }
 
+legend {
+	text-align: center;
+}
+
 .bg-steel {
 	background-color: #5f788a;
 }
@@ -61,16 +65,11 @@ a.article-title:hover {
 	font-size: 2.5rem;
 }
 
-.sidenav {
-	height: 100%;
-	width: 0;
-	position: fixed;
-	z-index: 1;
-	top: 0;
-	left: 0;
-	background-color: #dddddd;
-	overflow-x: hidden;
-	padding-top: 2rem;
-	transition: 0.3s;
+.logo {
+	margin-bottom: 2rem;
 }
 
+.auth {
+	width: 30rem;
+	display: inline-block;
+}

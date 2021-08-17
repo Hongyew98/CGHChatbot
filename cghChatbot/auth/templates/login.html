@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="text-center mt-5"><img class="mb-5" src="{{ url_for('static', filename='cghLogoOnly.png') }}" alt="" width="140" height="140" /></div>
+<div class="logo text-center mt-5"><img class="mb-5" src="{{ url_for('static', filename='cghLogoOnly.png') }}" alt="" width="140" height="140" /></div>
 <div class="content-section">
 	<form method="POST" action="">
 		{{ form.hidden_tag() }}
 		<fieldset class="form-group">
-			<legend class="border-bottom mb-4 text-center">Login</legend>
+			<legend class="border-bottom mb-4">Login</legend>
 			<div class="mb-3">
 				{% if form.email.errors %}
 					{{ form.email(class="form-control is-invalid") }}
@@ -16,10 +16,10 @@
 						{% endfor %}
 					</div>
 				{% else %}
-					{{ form.email(class="form-control", autocomplete="off", autofocus="true", placeholder="Email address") }}
+					{{ form.email(class="form-control") }}
 				{% endif %}
 			</div>
-			<div class="">
+			<div>
 				{% if form.password.errors %}
 					{{ form.password(class="form-control is-invalid") }}
 					<div class="invalid-feedback">
@@ -28,12 +28,12 @@
 						{% endfor %}
 					</div>
 				{% else %}
-					{{ form.password(class="form-control", autocomplete="off", placeholder="Password") }}
+					{{ form.password(class="form-control") }}
 				{% endif %}
 			</div>
 			<div class="text-end">
 				<small class="text-muted">
-					<a href="#" style="text-decoration: none">Forgot Password?</a>
+					<a href="{{ url_for('auth.reset_request') }}" style="text-decoration:none">Forgot Password?</a>
 				</small>
 			</div>
 			<div class="mb-3 form-check">{{ form.remember.label(class="form-check-label", for="remember") }} {{ form.remember(class="form-check-input") }}</div>
@@ -42,6 +42,6 @@
 	</form>
 </div>
 <div class="border-top pt-4 text-center">
-	<small class="text-muted"> Don't Have an Account? <a class="ml-2" href="{{ url_for('hr.signup') }}">Sign Up</a> </small>
+	<small class="text-muted"> Don't Have an Account? <a class="ml-2" href="{{ url_for('auth.signup') }}">Sign Up</a> </small>
 </div>
 {% endblock %}
