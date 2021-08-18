@@ -5,13 +5,7 @@ from .forms import *
 from .utils import *
 from ..models import *
 
-auth = Blueprint("auth", __name__, static_url_path="")
-group="auth"
-
-@auth.route("/", methods=["GET", "POST"])
-def index():
-    return redirect(url_for("bot.chatbot"))
-
+auth = Blueprint("auth", __name__, static_folder="static", static_url_path="/CGHChatbot/cghChatbot/auth", template_folder="templates")
 
 @auth.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -26,7 +20,7 @@ def signup():
         db.session.commit()
         flash("Account successfully created!", "success")
         return redirect(url_for("auth.login"))
-    return render_template("signup.html", title="Sign Up", form=form, group=group)
+    return render_template("signup.html", title="Sign Up", form=form)
 
 
 @auth.route("/login", methods=["GET", "POST"])
@@ -49,31 +43,13 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for("index"))
         else:
             flash("Invalid login. Please try again.", "danger")
-    return render_template("login.html", title="Login", form=form, group=group)
+    return render_template("login.html", title="Login", form=form)
 
 
 @auth.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for("auth.login"))
-
-
-@auth.route("/account", methods=["GET", "POST"])
-@login_required
-def account():
-    form = UpdateAccountForm()
-    if form.validate_on_submit():
-        # if form.cv.data:
-        #     cv_file = save_cv(form.cv.data)
-        #     current_user.cv = cv_file
-        # current_user.cv = form.cv.data
-        db.session.commit()
-        flash("CV uploaded successfully!", "success")
-        redirect(url_for("temporary.account"))
-    elif request.method == "GET":
-        form.cv.data = current_user.cv
-    cv = url_for("static", filename="CVs/" + current_user.cv)
-    return render_template("account.html", cv=cv, form=form, group=group)
 
 
 @auth.route("/resetpassword", methods=["GET", "POST"])
@@ -86,7 +62,7 @@ def reset_request():
         send_reset_email(user)
         flash("An email has been sent with instructions to reset your password.", "info")
         return redirect(url_for("auth.login"))
-    return render_template("reset_request.html", title="Reset Password", form=form, group=group)
+    return render_template("reset_request.html", title="Reset Password", form=form)
 
 
 @auth.route("/resetpassword/<token>", methods=["GET", "POST"])
@@ -103,4 +79,4 @@ def reset_token(token):
         db.session.commit()
         flash("Your password has been updated.", "success")
         return redirect(url_for("auth.login"))
-    return render_template("reset_token.html", title="Reset Password", form=form, group=group)
+    return render_template("reset_token.html", title="Reset Password", form=form)

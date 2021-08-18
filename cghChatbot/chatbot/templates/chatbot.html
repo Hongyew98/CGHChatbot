@@ -1,14 +1,14 @@
-{% extends "base.html" %}
+{% extends "base_chatbot.html" %}
 
 {% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='styles/chatbot.css') }}" />
+<link rel="stylesheet" href="{{ url_for('bot.static', filename='styles/chatbot.css') }}" />
 <section class="chatbox">
     <header class="chatbox-header">
         Chatbot
     </header>
     <main class="chatbox-chat">
         <div class="msg left-msg">
-            <div><img class="msg-img" src="{{ url_for('static', filename='cghLogoOnlyCircle.png') }}" alt=""/></div>
+            <div><img class="msg-img" src="{{ url_for('bot.static', filename='cghLogoOnlyCircle.png') }}" alt=""/></div>
             <div class="msg-bubble">
                 <div class="msg-info">
                     <div class="msg-info-name">Chatbot</div>
@@ -29,8 +29,8 @@
     const chatboxForm = get(".chatbox-inputarea");
     const chatboxInput = get(".form-control");
     const chatboxChat = get(".chatbox-chat");
-    const BOT_IMG = "{{ url_for('static', filename='cghLogoOnlyCircle.png') }}";
-    const PERSON_IMG = "{{ url_for('static', filename='default.png') }}";
+    const BOT_IMG = "{{ url_for('bot.static', filename='cghLogoOnlyCircle.png') }}";
+    const PERSON_IMG = "{{ url_for('bot.static', filename='default.png') }}";
     const BOT_NAME = "ChatBot";
     const PERSON_NAME = "You";
     chatboxForm.addEventListener("submit", event => {

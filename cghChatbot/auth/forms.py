@@ -22,17 +22,9 @@ class LoginForm(FlaskForm):
     remember = BooleanField("Remember Me")
     submit = SubmitField("Login")
 
-class UpdateAccountForm(FlaskForm):
-    cv = FileField("Upload CV", validators=[FileAllowed(["doc", "docx", "pdf"], "word or pdf only!")])
-    submit = SubmitField("Upload")
-
-    # def validate_cv(self, cv):
-    #     if cv.data:
-    #         cv.data = re.sub(r'[^a-z0-9_.-]', '_', cv.data)
-
 class RequestResetForm(FlaskForm):
     email = StringField("Email",validators=[DataRequired(), Email()], render_kw={"autocomplete":"off", "autofocus":"True", "placeholder":"Email Address"})
-    submit = SubmitField("Reset Password")
+    submit = SubmitField("Continue")
 
     def validate_email(self, email):
         if not User.query.filter_by(email=email.data).first():

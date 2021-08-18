@@ -29,4 +29,7 @@ def create_app(config_class=Config):
     from .user.routes import user
     app.register_blueprint(user)
 
+    from .chatbot.routes import bot
+    app.register_blueprint(bot)
+
     return app
