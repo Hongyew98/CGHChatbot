@@ -65,11 +65,9 @@ a.article-title:hover {
 	font-size: 2.5rem;
 }
 
-.logo {
-	margin-bottom: 2rem;
-}
-
-.auth {
-	width: 30rem;
-	display: inline-block;
-}
+.account-img {
+	height: 125px;
+	width: 125px;
+	margin-right: 20px;
+	margin-bottom: 16px;
+  }

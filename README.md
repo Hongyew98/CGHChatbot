@@ -28,7 +28,7 @@ The app contains the following activities:
 ```
 .
 ├─ admin
-│  ├─ overview
+│  ├─ home
 │  ├─ create job
 │  └─ edit job
 ├─ auth
@@ -36,12 +36,12 @@ The app contains the following activities:
 │  ├─ signup
 │  └─ reset password
 ├─ user
-│  ├─ upload cv
+│  ├─ home
 │  ├─ attempt quiz
 │  └─ view account
 └─ chatbot
 ```
-To see a more detailed view and explanation of the structure click [here]()
+To see a more detailed view and explanation of the structure click [here](https://pastebin.com/r2yph7i7)
 
 ## To Do
 
