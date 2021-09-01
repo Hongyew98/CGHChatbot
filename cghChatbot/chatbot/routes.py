@@ -33,10 +33,10 @@ def send():
 
 @bot.route("/next", methods=["GET", "POST"])
 def next():
-    answer = ["cute","potato"]
+    answer = ["hello","look in chatbot/routes.py"]
     return json.dumps(answer)
 
 @bot.route("/answer", methods=["GET", "POST"])
 def answer():
-    answer = ["potato","tomato","broccoli"]
+    answer = ["answer1","answer2","answer3"]
     return json.dumps(answer)
