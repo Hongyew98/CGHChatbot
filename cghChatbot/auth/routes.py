@@ -1,16 +1,16 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import login_user, logout_user, current_user, login_required
+from flask_login import login_user, logout_user, current_user
+from ..models import *
 from .forms import *
 from .utils import *
-from ..models import *
 
 auth = Blueprint("auth", __name__, static_folder="static", static_url_path="/CGHChatbot/cghChatbot/auth", template_folder="templates")
 
 @auth.route("/signup", methods=["GET", "POST"])
 def signup():
     if current_user.is_authenticated:
-        return redirect(url_for("index"))
+        return redirect(url_for("admin.index")) if current_user.admin() else redirect(url_for("user.index"))
     form = RegistrationForm()
     if form.validate_on_submit():
         db.session.add(User(firstname=form.firstname.data,
@@ -26,21 +26,18 @@ def signup():
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-       return redirect(url_for("index"))
+        return redirect(url_for("admin.index")) if current_user.admin() else redirect(url_for("user.index"))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        admin = Admin.query.filter_by(email=form.email.data).first()
         if user and check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             flash("Login successful!", "success")
             next_page = request.args.get("next")
-            return redirect(next_page) if next_page else redirect(url_for("index"))
-        elif admin and check_password_hash(admin.password, form.password.data):
-            login_user(admin, remember=form.remember.data)
-            flash("Login successful!", "success")
-            next_page = request.args.get("next")
-            return redirect(next_page) if next_page else redirect(url_for("index"))
+            if next_page:
+                return redirect(next_page)
+            else:
+                return redirect(url_for("admin.index")) if user.admin() else redirect(url_for("user.index"))
         else:
             flash("Invalid login. Please try again.", "danger")
     return render_template("login.html", title="Login", form=form)
@@ -49,13 +46,14 @@ def login():
 @auth.route("/logout")
 def logout():
     logout_user()
+    flash("You have been logged out.", "info")
     return redirect(url_for("auth.login"))
 
 
 @auth.route("/resetpassword", methods=["GET", "POST"])
 def reset_request():
     if current_user.is_authenticated:
-       return redirect(url_for("index"))
+       return redirect(url_for("admin.index")) if current_user.admin() else redirect(url_for("user.index"))
     form = RequestResetForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -68,7 +66,7 @@ def reset_request():
 @auth.route("/resetpassword/<token>", methods=["GET", "POST"])
 def reset_token(token):
     if current_user.is_authenticated:
-       return redirect(url_for("index"))
+       return redirect(url_for("admin.index")) if current_user.admin() else redirect(url_for("user.index"))
     user = User.verify_reset_token(token)
     if not user:
         flash("That token is invalid or expired.", "warning")

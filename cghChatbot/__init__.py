@@ -8,8 +8,8 @@ from .config import Config
 db = SQLAlchemy()
 login_manager = LoginManager()
 mail = Mail()
-login_manager.login_view = "login"
-login_manager.login_message_category = "info"
+login_manager.login_view = "auth.login"
+login_manager.login_message_category = "warning"
 
 
 def create_app(config_class=Config):

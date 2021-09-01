@@ -2,24 +2,99 @@
 
 {% block content %}
 <div class="content-section">
-	<div class="media-body">
-		<h2 class="account-heading">{{ current_user.firstname }} {{ current_user.lastname }}</h2>
-		<p class="text-secondary">{{ current_user.email }}</p>
-		<p class="text-secondary" src="{{ cv }}">{{ cv }}</p>
-	</div>
-	<form method="POST" enctype="multipart/form-data">
-		{{ form.hidden_tag() }}
-		<fieldset class="form-group">
-			<legend class="border-bottom mb-4">Account Info</legend>
-			<div class="form-group">
-				{{ form.cv.label() }}
-				{{ form.cv(class="form-control-file") }}
-				{% if form.cv.errors %}
-				  <span class="text-danger">{{ error }}</span><br/>
+	<div class="media">
+		<form method="POST" action="" enctype="multipart/form-data">
+			<fieldset class="form-group">
+				<img class="rounded-circle account-img" src="{{ image }}">
+				<div class="mb-3">
+					{{ form.image(class="form-control-file") }}
+					{% if form.image.errors %}
+						{% for error in form.image.errors %}
+							<br><span class="text-danger" style="font-size: 14px">{{ error }}</span>
+						{% endfor %}
+					{% endif %}
+				</div>
+				<div class="media-body">
+					<h2 class="account-heading">{{ current_user.firstname }} {{ current_user.lastname }}</h2>
+					<p class="text-secondary">{{ current_user.email }}</p>
+				</div>
+				{{ form.hidden_tag() }}
+				<legend class="border-bottom mb-3 text-start">Account Info</legend>
+				<div class="mb-3">
+					{{ form.email.label(class="form-control-label") }}
+					{% if form.email.errors %}
+						{{ form.email(class="form-control is-invalid") }}
+						<div class="invalid-feedback">
+							{% for error in form.email.errors %}
+								<span>{{ error }}</span><br>
+							{% endfor %}
+						</div>
+					{% else %}
+						{{ form.email(class="form-control") }}
+					{% endif %}
+				</div>
+
+
+
+
+
+				
+				<div class="mb-3">
+					{{ cvname }}<br>
+					{{ form.cv.label() }}
+					{{ form.cv(class="form-control-file") }}
+					{% if form.cv.errors %}
+						{% for error in form.cv.errors %}
+							<br><span class="text-danger" style="font-size: 14px">{{ error }}</span>
+						{% endfor %}
+					{% endif %}
+				</div>
+
+
+
+
+				<div class="border-top pt-3 mb-3">Change Password</div>
+				{% if 0 %}
+					<div class="mb-3">
+						{% if form.password.errors %}
+							{{ form.password(class="form-control is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.password.errors %}
+									<span>{{ error }}</span><br>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.password(class="form-control") }}
+						{% endif %}
+					</div>
+					<div class="mb-3">
+						{% if form.new_password.errors %}
+							{{ form.new_password(class="form-control is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.new_password.errors %}
+									<span>{{ error }}</span><br>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.new_password(class="form-control") }}
+						{% endif %}
+					</div>
+					<div class="mb-3">
+						{% if form.confirm_password.errors %}
+							{{ form.confirm_password(class="form-control is-invalid") }}
+							<div class="invalid-feedback">
+								{% for error in form.confirm_password.errors %}
+									<span>{{ error }}</span><br>
+								{% endfor %}
+							</div>
+						{% else %}
+							{{ form.confirm_password(class="form-control") }}
+						{% endif %}
+					</div>
 				{% endif %}
-			</div>
-		</fieldset>
-		<div class="form-group">{{ form.submit(class="btn btn-outline-info") }}</div>
-	</form>
+			</fieldset>
+			<div class="d-grid col-4 mx-auto mb-3">{{ form.submit(class="btn btn-primary") }}</div>
+		</form>
+	</div>
 </div>
 {% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base_user.html" %}
+
+{% block content %}
+<div class="content-section">
+	<div class="media">
+        <div class="media-body">
+            <h2 class="account-heading">Hello {{ current_user.firstname }},</h2>
+        </div>
+        <div class="mb-3">{{ cvname }}</div>
+        {% if not cvname %}
+            <form method="POST" action="" enctype="multipart/form-data">
+                <fieldset class="form-group">
+                        <div class="mb-3">
+                            {{ form.cv.label() }}
+                            {{ form.cv(class="form-control-file") }}
+                            {% if form.cv.errors %}
+                                {% for error in form.cv.errors %}
+                                    <br><span class="text-danger" style="font-size: 14px">{{ error }}</span>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                </fieldset>
+                <div class="d-grid col-4 mx-auto mb-3">{{ form.submit(class="btn btn-primary") }}</div>
+            </form>
+        {% else %}
+            <a href="{{ url_for('user.quiz') }}"><button class="btn btn-primary d-grid col-4 mb-3">Continue</div></a>
+        {% endif %}
+	</div>
+</div>
+{% endblock %}
