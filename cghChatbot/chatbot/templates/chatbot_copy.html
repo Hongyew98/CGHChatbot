@@ -1,0 +1,76 @@
+{% extends "base_chatbot.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="{{ url_for('bot.static', filename='styles/chatbot.css') }}" />
+<section class="chatbox">
+<header class="chatbox-header">
+    Chatbot
+</header>
+<main class="chatbox-chat">
+</main>
+<div action="" class="chatbox-inputarea">
+</div>
+</section>
+<script>
+    const chatboxForm = get(".chatbox-inputarea");
+    const chatboxChat = get(".chatbox-chat");
+    const BOT_IMG = "{{ url_for('bot.static', filename='cghLogoOnlyCircle.png') }}";
+    const PERSON_IMG = "{{ image }}";
+    const BOT_NAME = "ChatBot";
+    const PERSON_NAME = "You";
+    var next = 0
+    document.addEventListener("DOMContentLoaded", function() {
+        fixedResponse(next);
+        answers(next);
+        next++
+    })
+    chatboxForm.addEventListener("submit", event => {
+        event.preventDefault();
+    });
+    function appendMessage(name, img, side, text) {
+        const msgHTML = `
+                        <div class="msg ${side}-msg">
+                            <div><img class="msg-img" src="${img}" alt=""/></div>
+                            <div class="msg-bubble">
+                                <div class="msg-info">
+                                    <div class="msg-info-name">${name}</div>
+                                    <div class="msg-info-time">${getTime(new Date())}</div>
+                                </div>
+                                <div class="msg-text">${text}</div>
+                            </div>
+                        </div>
+                        `;
+        chatboxChat.insertAdjacentHTML("beforeend", msgHTML);
+        chatboxChat.scrollTop += 500;
+    }
+    function fixedResponse(next) {
+        $.get("{{ url_for('bot.next') }}", { ans: next }).done(data => {
+        const msgText = JSON.parse(data);
+        for (let i=0; i<msgText.length; i++) {
+            appendMessage(BOT_NAME, BOT_IMG, "left", msgText[i]);
+        }
+        });
+    }
+    function answers(next) {
+        chatboxForm.innerHTML = ``
+        $.get("{{ url_for('bot.answer') }}", { ans: next }).done(data => {
+        const ansText = JSON.parse(data);
+        for (let i=0; i<ansText.length; i++) {
+            let ansHTML =   `
+                        <button class="btn btn-primary mx-auto chatbox-btn answer" type="submit" value="${ansText[i]}">${ansText[i]}</button>
+                        `;
+            chatboxForm.insertAdjacentHTML("afterbegin", ansHTML);
+            document.querySelectorAll(".answer").forEach(button => {
+            button.onclick = function() {
+                appendMessage(PERSON_NAME, PERSON_IMG, "right", button.value);
+                fixedResponse(next);
+                answer(next);
+                next++
+                }
+            });
+        }
+        });
+    }
+    // Utils in chatbot.js
+</script>
+{% endblock %}
