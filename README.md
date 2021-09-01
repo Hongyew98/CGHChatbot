@@ -12,14 +12,24 @@ For the first stage of the project, I will be focusing on developing the structu
 ## Installation
 After cloning, use command-line to cd to the project folder and install the necessary packages.
 
+Step 1: Install requirements
 ```bash
 pip install -r requirements.txt
 ```
-Next, install the database (requires sqlite)
+Step 2: Set environment variables
+```
+export SECRET_KEY=(type any secret key)
+export SQLALCHEMY_DATABASE_URI=sqlite:///(type database name).sqlite3
+export EMAIL_USER=(Type server email username)
+export EMAIL_PASS=(Type server email password)
+```
+Note: Email functionality does not work yet
+
+Step 3: Set up the database (requires sqlite)
 ```python
 python cghChatbot/models.py
 ```
-Finally, to run the website:
+Step 4: Run the website
 ```python
 python app.py
 ```
