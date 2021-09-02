@@ -30,8 +30,8 @@ There are 8 main activities:
 2. Overview
 3. All Jobs
 5. Completed
-6. Questions    (Underdeveloped)
-7. Statistics   (Not developed)
+6. Questions    (WIP)
+7. Statistics   (Undeveloped)
 8. Quiz         (Dummy)
 
 The following page is to simulate a candidate submitting an application with a completed test, as well as any questions they might have.
