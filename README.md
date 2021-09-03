@@ -41,7 +41,7 @@ The app contains the following activities:
 │  └─ view account
 └─ chatbot
 ```
-To see a more detailed view and explanation of the structure click [here](https://pastebin.com/r2yph7i7)
+To see a more detailed view and explanation of the structure click [here](https://pastebin.com/a8PXfVzp)
 
 ## To Do
 

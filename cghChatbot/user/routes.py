@@ -1,3 +1,4 @@
+from cghChatbot.chatbot.routes import chatbot
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from werkzeug.security import generate_password_hash
 from flask_login.utils import login_required, current_user
@@ -7,18 +8,22 @@ from .forms import *
 user = Blueprint("user", __name__, static_folder="static", static_url_path="/CGHChatbot/cghChatbot/user", template_folder="templates")
 
 @user.route("/", methods=["GET", "POST"])
+@login_required
 def index():
-    form = CVForm()
-    if request.method == "POST" and form.validate_on_submit:
-        if not current_user.is_authenticated:
-            return current_app.login_manager.unauthorized()
-        if form.cv.data:
-            current_user.cvname = form.cv.data.filename
-            cv = save_cv(form.cv.data)
-            delete(current_user.cv)
-            current_user.cv = cv
-    cvname = current_user.cvname if current_user.cv else ""
-    return render_template("index_user.html", title="Apply", form=form, cvname=cvname)
+
+    return redirect(url_for("bot.chatbot"))
+
+    # form = CVForm()
+    # if request.method == "POST" and form.validate_on_submit:
+    #     if not current_user.is_authenticated:
+    #         return current_app.login_manager.unauthorized()
+    #     if form.cv.data:
+    #         current_user.cvname = form.cv.data.filename
+    #         cv = save_cv(form.cv.data)
+    #         delete(current_user.cv)
+    #         current_user.cv = cv
+    # cvname = current_user.cvname if current_user.cv else ""
+    # return render_template("index_user.html", title="Apply", form=form, cvname=cvname)
 
 @user.route("/account", methods=["GET", "POST"])
 @login_required

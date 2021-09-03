@@ -1,7 +1,6 @@
 import json
 from flask import Blueprint, render_template, request, url_for
 from flask_login import current_user
-from urllib.parse import quote, unquote
 from .processor import *
 
 bot = Blueprint("bot", __name__, url_prefix="/chatbot", static_folder="static", static_url_path="/CGHChatbot/cghChatbot/chatbot", template_folder="templates")
